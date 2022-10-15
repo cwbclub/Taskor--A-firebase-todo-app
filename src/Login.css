@@ -1,0 +1,45 @@
+.loginBg{
+    background-color: #538493;
+    
+}
+
+.loginBody{
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+}
+
+.textBox{
+display: flex;
+flex-direction: column;
+gap: 10px;
+align-items: center;
+text-align: center;
+background-color: rgba(255, 255, 255, 0.707);
+padding: 30px;
+border-radius: 7px;
+backdrop-filter: blur(4px);
+
+}
+
+.textBox button{
+    background-color: #10495a;
+    color: white;
+    border: none;
+    padding: 12px 7px;
+    width: 200px;
+    border-radius: 50vh;
+    margin-top: 10px;
+    font-size: 1.5rem;
+    box-shadow: 2px 3px 18px rgba(0,0,0,0.3);
+}
+
+.textBox p{
+    font-size: 1.2rem;
+    color: #05212a;
+    width: 90%;
+}
+
+.textBox h1{
+    font-size: 1.6rem;
+}
