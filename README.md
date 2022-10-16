@@ -1,8 +1,8 @@
 # Taskor - A Simple but effective Todo App
 
 #### Firebase email : `namoanishtharu@gmail.com`
-#### Netlify : Anish Tharu
-#### Google Search Console : Team CanWeBe
+#### Netlify : `Anish Tharu`
+#### Google Search Console : `Team CanWeBe`
 
 # Getting Started with Create React App
 
