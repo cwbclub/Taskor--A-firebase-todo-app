@@ -69,6 +69,7 @@ footer a {
   border-radius: 7px;
   border: 0.5px solid rgb(161, 161, 161);
   padding: 12px 18px 12px 8px;
+  position: relative;
 }
 
 .task svg {
@@ -90,13 +91,13 @@ footer a {
   opacity: 0.57;
   background-color: rgb(224, 224, 224);
   /* box-shadow: 1px 1px 10px -2px rgba(0, 0, 0, 0.23); */
-  padding-right: 40px;
+  padding-right: 43px;
   border: 1px solid rgb(122, 122, 122);
 }
 
 svg.dltBtn {
   position: absolute;
-  right: 30px;
+  right: 10px;
   font-size: 1.7rem;
   z-index: 9;
   width: auto;
@@ -185,4 +186,32 @@ form input::placeholder {
 .progressDiv span.active {
   color: black;
   font-weight: 500;
+}
+
+/* MEDIA QUERIES */
+@media screen and (min-width: 650px) {
+  form {
+    margin-top: 40px;
+  }
+  form input {
+    padding-left: 15px;
+  }
+  .task {
+    padding: 10px 18px 10px 8px;
+  }
+  .task svg {
+    font-size: 1.1rem;
+    width: 5%;
+  }
+  .task p {
+    font-size: 1.2rem;
+    line-height: 25px;
+    width: 95%;
+  }
+  .taskList {
+    gap: 26px;
+  }
+  svg.dltBtn {
+    font-size: 1.5rem;
+  }
 }

@@ -57,18 +57,18 @@ export default function App() {
 
   return (
     <>
-      <div className="topSticky">
-        <div className="wrapper">
+      <div className='topSticky'>
+        <div className='wrapper'>
           <Nav />
           <form onSubmit={handleSubmit}>
             <input
               required
               value={task}
               onChange={(e) => setTask(e.target.value)}
-              type="text"
-              placeholder="Eg: Add New Feature"
+              type='text'
+              placeholder='Eg: Add New Feature'
             />
-            <button type="submit" disabled={addLoading}>
+            <button type='submit' disabled={addLoading}>
               {addLoading ? (
                 'Adding'
               ) : (
@@ -84,12 +84,20 @@ export default function App() {
       </div>
 
       {isLoading ? (
-        <p className="loading">Loading..</p>
+        <p className='loading'>Loading..</p>
       ) : (
         <TaskList data={data} current={current} />
       )}
-      <footer className="wrapper">
-        Developed by <a href="https://canwebe.tech">CanWeBe!</a>
+
+      <footer className='wrapper'>
+        Developed by{' '}
+        <a
+          target='_blank'
+          rel='noopener noreferrer'
+          href='https://canwebe.tech'
+        >
+          CanWeBe!
+        </a>
       </footer>
     </>
   )

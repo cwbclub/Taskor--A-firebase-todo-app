@@ -3,6 +3,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
+  background-image: url("/public/assets/bg2.svg");
 }
 .loginBg::after {
   content: '';
@@ -62,4 +63,29 @@
 
 .textBox h1 {
   font-size: 2rem;
+}
+
+/* MEDIA QUERRY */
+@media screen and (min-width:600px) {
+ .textBox{
+  background-color: rgba(255, 253, 253, 0.534);
+  padding: 40px 30px;
+  border-radius: 7px;
+  backdrop-filter: blur(4px);
+  box-shadow: 2px 3px 18px rgba(0, 0, 0, 0.23);
+ }
+ .textBox p{
+  width: 400px;
+ }
+}
+
+@media screen and (min-width:800px) {
+  .textBox {
+    background-color: rgba(255, 255, 255, 0.61);
+    padding: 50px 40px;
+    backdrop-filter: blur(5px);
+    margin-top: 0;
+  }
+
+ 
 }
