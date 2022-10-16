@@ -5,6 +5,8 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  orderBy,
+  query,
   serverTimestamp,
   setDoc,
   updateDoc,
@@ -20,17 +22,14 @@ export const addToDB = async (uid, task) => {
   })
 }
 
-export const getTaskList = async (uid) => {
-  const q = collection(db, `users/${uid}/tasklists`)
-  const snapshot = await getDocs(q)
-  if (!snapshot.empty) {
-    return snapshot.docs.map((item) => ({ ...item.data(), id: item.id }))
-  }
-}
-
-export const chnageStatus = async (uid, id) => {
+export const chnageStatus = async (uid, id, status) => {
   const docRef = doc(db, `users/${uid}/tasklists/${id}`)
   await updateDoc(docRef, {
-    status: false,
+    status: !status,
   })
+}
+
+export const deleteTask = async (uid, id) => {
+  const docRef = doc(db, `users/${uid}/tasklists/${id}`)
+  await deleteDoc(docRef)
 }
