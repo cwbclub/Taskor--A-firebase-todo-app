@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import { auth, googleProvider } from './lib/firebase'
 import './Login.css'
-import bg from './assets/bg.svg'
+import bg from './assets/bg2.svg'
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false)

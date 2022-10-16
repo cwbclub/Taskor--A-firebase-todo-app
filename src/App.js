@@ -82,18 +82,15 @@ export default function App() {
           <ProgressDiv current={current} setCurrent={setCurrent} />
         </div>
       </div>
-      <div className="wrapper mainBody">
-        {isLoading ? (
-          <p className="loading">Loading..</p>
-        ) : (
-          <main>
-            <TaskList data={data} current={current} />
-          </main>
-        )}
-        <footer>
-          Developed by <a href="https://canwebe.tech">CanWeBe!</a>
-        </footer>
-      </div>
+
+      {isLoading ? (
+        <p className="loading">Loading..</p>
+      ) : (
+        <TaskList data={data} current={current} />
+      )}
+      <footer className="wrapper">
+        Developed by <a href="https://canwebe.tech">CanWeBe!</a>
+      </footer>
     </>
   )
 }

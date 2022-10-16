@@ -17,15 +17,19 @@ export default function TaskList({ data, current }) {
     data = data.filter((item) => !item.status)
   }
 
-  return data.length ? (
-    <>
-      <div className="taskList">
-        {data.map((item) => (
-          <TaskCard item={item} uid={user?.uid} key={item.id} />
-        ))}
-      </div>
-    </>
-  ) : (
-    <p className="noTask">{noTaskMap[current]}</p>
+  return (
+    <div className="wrapper">
+      {data.length ? (
+        <>
+          <div className="taskList">
+            {data.map((item) => (
+              <TaskCard item={item} uid={user?.uid} key={item.id} />
+            ))}
+          </div>
+        </>
+      ) : (
+        <p className="noTask">{noTaskMap[current]}</p>
+      )}
+    </div>
   )
 }

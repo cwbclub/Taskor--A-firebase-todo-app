@@ -16,7 +16,7 @@ export default function Nav() {
 
   return (
     <nav>
-      <h1>Taskor</h1>
+      <h1>Taskor.</h1>
       <span onClick={handleClick}>
         <FaSignOutAlt /> Logout
       </span>
