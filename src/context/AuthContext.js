@@ -1,8 +1,12 @@
 import { onAuthStateChanged } from 'firebase/auth'
-import { useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { auth } from '../lib/firebase'
 
-export default function useAuth() {
+const AuthContext = createContext(null)
+
+export const useAuth = () => useContext(AuthContext)
+
+export default function AuthContextProvider({ children }) {
   const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')))
 
   useEffect(() => {
@@ -18,8 +22,8 @@ export default function useAuth() {
       }
     })
 
-    return unsubscribe
+    return () => unsubscribe()
   }, [auth])
 
-  return user
+  return <AuthContext.Provider value={user}>{children}</AuthContext.Provider>
 }

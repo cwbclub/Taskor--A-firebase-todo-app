@@ -1,14 +1,19 @@
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 body {
-font-family: 'Ubuntu', sans-serif;
-
+  font-family: 'Ubuntu', sans-serif;
 }
 
-.wrapper{
+html {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.wrapper {
   width: 90%;
   margin: 0 auto;
   max-width: 1000px;

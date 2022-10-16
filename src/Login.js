@@ -1,13 +1,16 @@
 import { signInWithPopup, signOut } from 'firebase/auth'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import toast from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from './context/AuthContext'
 import { auth, googleProvider } from './lib/firebase'
 import './Login.css'
+import bg from './assets/bg.svg'
 
 export default function Login() {
   const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
+  const user = useAuth()
 
   const handleSignin = async () => {
     setIsLoading(true)
@@ -15,8 +18,7 @@ export default function Login() {
     try {
       const res = await signInWithPopup(auth, googleProvider)
       if (res) {
-        console.log(res)
-        toast.success(<b>Sign In Successful</b>, { id })
+        toast.success(<b>Welcome {res.user.displayName}</b>, { id })
         navigate('/')
       } else {
         throw new Error('Something went wrong, Try Again!')
@@ -29,11 +31,17 @@ export default function Login() {
     }
   }
 
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  }, [])
+
   return (
-    <div className='loginBg'>
-      <div className='wrapper loginBody'>
-        <div className='textBox'>
-          <h1>Welcome To MyTasker</h1>
+    <div className="loginBg" style={{ backgroundImage: `url(${bg})` }}>
+      <div className="wrapper loginBody">
+        <div className="textBox">
+          <h1>Welcome To Taskor</h1>
           <p>
             This is an easy to use TODO list app with beautifull UI. It is
             powered by Firebase and built by CanWeBe!

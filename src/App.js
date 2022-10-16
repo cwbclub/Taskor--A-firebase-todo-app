@@ -1,80 +1,99 @@
 import { useEffect, useState } from 'react'
 import './App.css'
-import { FaRegCircle } from 'react-icons/fa'
-import AddBtn from './components/addBtn'
-import Modal from './components/modal'
+import { FaPlus } from 'react-icons/fa'
 import Nav from './components/nav'
-import { addToDB, chnageStatus, getTaskList } from './utils/firebase'
+import { addToDB } from './utils/firebase'
 import toast from 'react-hot-toast'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { db } from './lib/firebase'
+import ProgressDiv from './components/progressDiv'
+import { useAuth } from './context/AuthContext'
+import TaskList from './components/taskList'
 
-export default function App({ user }) {
-  const [isModal, setIsModal] = useState(false)
+export default function App() {
+  const [addLoading, setAddLoading] = useState(false)
+  const [task, setTask] = useState('')
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
+  const [current, setCurrent] = useState('all')
+  const user = useAuth()
 
-  const handleDone = async (id) => {
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setAddLoading(true)
+    const id = toast.loading(<b>Adding Task...</b>)
     try {
-      await chnageStatus(user?.uid, id)
-      handleData()
+      await addToDB(user?.uid, task)
+      toast.success(<b>Task added successfuly</b>, { id })
+      setAddLoading(false)
+      setTask('')
     } catch (error) {
       console.log(error.message)
-      toast.error(<b>{error.message}</b>)
-    }
-  }
-
-  const handleData = async () => {
-    // setIsLoading(true)
-    try {
-      const res = await getTaskList(user?.uid)
-      setData(res)
-      setIsLoading(false)
-    } catch (error) {
-      console.log(error.message)
-      toast.error(<b>{error.message}</b>)
-      setIsLoading(false)
+      toast.error(<b>{error.message}</b>, { id })
+      setAddLoading(false)
     }
   }
 
   useEffect(() => {
-    handleData()
+    const unsub = onSnapshot(
+      query(
+        collection(db, `users/${user?.uid}/tasklists`),
+        orderBy('timestamp', 'desc')
+      ),
+      (snapshot) => {
+        if (!snapshot.empty) {
+          const res = snapshot.docs.map((item) => ({
+            ...item.data(),
+            id: item.id,
+          }))
+          setData(res)
+        }
+        setIsLoading(false)
+      }
+    )
+
+    return () => unsub()
   }, [])
 
   return (
     <>
-      <div className='wrapper mainBody'>
-        {console.log(data)}
-        <Nav />
+      <div className="topSticky">
+        <div className="wrapper">
+          <Nav />
+          <form onSubmit={handleSubmit}>
+            <input
+              required
+              value={task}
+              onChange={(e) => setTask(e.target.value)}
+              type="text"
+              placeholder="Eg: Add New Feature"
+            />
+            <button type="submit" disabled={addLoading}>
+              {addLoading ? (
+                'Adding'
+              ) : (
+                <>
+                  <FaPlus />
+                  Add
+                </>
+              )}
+            </button>
+          </form>
+          <ProgressDiv current={current} setCurrent={setCurrent} />
+        </div>
+      </div>
+      <div className="wrapper mainBody">
         {isLoading ? (
-          <p className='loading'>Loading..</p>
+          <p className="loading">Loading..</p>
         ) : (
           <main>
-            {data.length ? (
-              <div className='taskList'>
-                {data.map((item) => (
-                  <div
-                    onClick={() => handleDone(item.id)}
-                    className={`task ${!item.status ? 'done' : ''}`}
-                    key={item.id}
-                  >
-                    <FaRegCircle />
-                    <p>{item.text}</p>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className='noTask'>No task added</p>
-            )}
+            <TaskList data={data} current={current} />
           </main>
         )}
-
-        <AddBtn setIsModal={setIsModal} />
         <footer>
-          Developed by <a href='https://canwebe.tech'>CanWeBe!</a>
+          Developed by <a href="https://canwebe.tech">CanWeBe!</a>
         </footer>
       </div>
-      {isModal && (
-        <Modal setIsModal={setIsModal} handleData={handleData} user={user} />
-      )}
     </>
   )
 }
