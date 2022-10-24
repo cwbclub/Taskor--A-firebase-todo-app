@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useReducer, useState } from 'react'
 import './App.css'
 import { FaPlus } from 'react-icons/fa'
 import Nav from './components/nav'
@@ -9,28 +9,57 @@ import { db } from './lib/firebase'
 import ProgressDiv from './components/progressDiv'
 import { useAuth } from './context/AuthContext'
 import TaskList from './components/taskList'
+import TaskReducer from './reducers/taskReducer'
+import { useModal } from './context/ModalContext'
+import Modal from './components/modal'
+import { motion } from 'framer-motion'
+
+const formVariant = {
+  hidden: {
+    y: -18,
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.4,
+      type: 'tween',
+    },
+  },
+  exit: {
+    x: '80vw',
+    opacity: 0,
+  },
+}
+
+const INITIAL_STATE = {
+  task: '',
+  addLoading: false,
+}
 
 export default function App() {
-  const [addLoading, setAddLoading] = useState(false)
-  const [task, setTask] = useState('')
   const [data, setData] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [current, setCurrent] = useState('all')
-  const user = useAuth()
+  const { user } = useAuth()
+  const { isModal, inputText, textId, dispatchModal } = useModal()
+
+  const [state, dispatch] = useReducer(TaskReducer, INITIAL_STATE)
+  const { task, addLoading } = state
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setAddLoading(true)
+    dispatch({ type: 'ADDING' })
     const id = toast.loading(<b>Adding Task...</b>)
     try {
       await addToDB(user?.uid, task)
       toast.success(<b>Task added successfuly</b>, { id })
-      setAddLoading(false)
-      setTask('')
+      dispatch({ type: 'TASKADDED' })
     } catch (error) {
       console.log(error.message)
       toast.error(<b>{error.message}</b>, { id })
-      setAddLoading(false)
+      dispatch({ type: 'TASKERROR' })
     }
   }
 
@@ -57,18 +86,26 @@ export default function App() {
 
   return (
     <>
-      <div className='topSticky'>
-        <div className='wrapper'>
+      <div className="topSticky">
+        <div className="wrapper">
           <Nav />
-          <form onSubmit={handleSubmit}>
+          <motion.form
+            variants={formVariant}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            onSubmit={handleSubmit}
+          >
             <input
               required
               value={task}
-              onChange={(e) => setTask(e.target.value)}
-              type='text'
-              placeholder='Eg: Add New Feature'
+              onChange={(e) =>
+                dispatch({ type: 'INPUTTASK', payload: e.target.value })
+              }
+              type="text"
+              placeholder="Eg: Add New Feature"
             />
-            <button type='submit' disabled={addLoading}>
+            <button type="submit" disabled={addLoading}>
               {addLoading ? (
                 'Adding'
               ) : (
@@ -78,27 +115,33 @@ export default function App() {
                 </>
               )}
             </button>
-          </form>
+          </motion.form>
           <ProgressDiv current={current} setCurrent={setCurrent} />
         </div>
       </div>
-
       {isLoading ? (
-        <p className='loading'>Loading..</p>
+        <p className="loading">Loading..</p>
       ) : (
         <TaskList data={data} current={current} />
       )}
-
-      <footer className='wrapper'>
+      <footer className="wrapper">
         Developed by{' '}
         <a
-          target='_blank'
-          rel='noopener noreferrer'
-          href='https://canwebe.tech'
+          target="_blank"
+          rel="noopener noreferrer"
+          href="https://canwebe.tech"
         >
           CanWeBe!
         </a>
       </footer>
+      {isModal && (
+        <Modal
+          dispatchModal={dispatchModal}
+          inputText={inputText}
+          textId={textId}
+          uid={user?.uid}
+        />
+      )}
     </>
   )
 }

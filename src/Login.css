@@ -3,7 +3,7 @@
   background-repeat: no-repeat;
   background-size: cover;
   background-position: top;
-  background-image: url("/public/assets/bg2.svg");
+  background-image: url('/public/assets/bg2.svg');
 }
 .loginBg::after {
   content: '';
@@ -43,12 +43,12 @@
   margin-top: 10px;
   font-size: 1.5rem;
   box-shadow: 2px 3px 18px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease-in-out;
+  /* transition: all 0.3s ease-in-out; */
 }
-.textBox button:active {
+/* .textBox button:active {
   background-color: #204b77;
   box-shadow: 1px 2px 15px rgba(0, 0, 0, 0.23);
-}
+} */
 
 .textBox button:disabled {
   opacity: 0.6;
@@ -66,20 +66,20 @@
 }
 
 /* MEDIA QUERRY */
-@media screen and (min-width:600px) {
- .textBox{
-  background-color: rgba(255, 253, 253, 0.534);
-  padding: 40px 30px;
-  border-radius: 7px;
-  backdrop-filter: blur(4px);
-  box-shadow: 2px 3px 18px rgba(0, 0, 0, 0.23);
- }
- .textBox p{
-  width: 400px;
- }
+@media screen and (min-width: 600px) {
+  .textBox {
+    background-color: rgba(255, 253, 253, 0.534);
+    padding: 40px 30px;
+    border-radius: 7px;
+    backdrop-filter: blur(4px);
+    box-shadow: 2px 3px 18px rgba(0, 0, 0, 0.23);
+  }
+  .textBox p {
+    width: 400px;
+  }
 }
 
-@media screen and (min-width:800px) {
+@media screen and (min-width: 800px) {
   .textBox {
     background-color: rgba(255, 255, 255, 0.61);
     padding: 50px 40px;

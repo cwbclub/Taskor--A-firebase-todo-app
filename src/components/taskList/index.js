@@ -1,8 +1,22 @@
 import { useAuth } from '../../context/AuthContext'
 import TaskCard from '../taskCard'
+import { motion } from 'framer-motion'
+const container = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.34,
+    },
+  },
+  exit: {
+    x: '80vw',
+    opacity: 0,
+  },
+}
 
 export default function TaskList({ data, current }) {
-  const user = useAuth()
+  const { user } = useAuth()
 
   const noTaskMap = {
     completed: 'No task completed',
@@ -21,11 +35,18 @@ export default function TaskList({ data, current }) {
     <div className="wrapper">
       {data.length ? (
         <>
-          <div className="taskList">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="visible"
+            exit="exit"
+            className="taskList"
+            layout
+          >
             {data.map((item) => (
               <TaskCard item={item} uid={user?.uid} key={item.id} />
             ))}
-          </div>
+          </motion.div>
         </>
       ) : (
         <p className="noTask">{noTaskMap[current]}</p>

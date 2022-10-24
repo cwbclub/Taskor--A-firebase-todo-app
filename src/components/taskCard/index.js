@@ -1,9 +1,35 @@
 import { deleteDoc } from 'firebase/firestore'
 import toast from 'react-hot-toast'
-import { FaRegCheckCircle, FaRegCircle, FaTrashAlt } from 'react-icons/fa'
+import {
+  FaEdit,
+  FaRegCheckCircle,
+  FaRegCircle,
+  FaTrashAlt,
+} from 'react-icons/fa'
+import { useModal } from '../../context/ModalContext'
 import { chnageStatus, deleteTask } from '../../utils/firebase'
+import { motion } from 'framer-motion'
+
+const mainVariant = {
+  hidden: {
+    y: -40,
+    scale: 0.6,
+    opacity: 0,
+  },
+  visible: {
+    y: 0,
+    scale: 1,
+    opacity: 1,
+  },
+  exit: {
+    x: '80vw',
+    opacity: 0,
+  },
+}
 
 export default function TaskCard({ item, uid }) {
+  const { dispatchModal } = useModal()
+
   const handleDone = async (id, status) => {
     try {
       await chnageStatus(uid, id, status)
@@ -26,17 +52,28 @@ export default function TaskCard({ item, uid }) {
       }
     }
   }
+
   return (
-    <div className={`task ${!item.status ? 'done' : ''}`}>
+    <motion.div
+      variants={mainVariant}
+      className={`task ${!item.status ? 'done' : ''}`}
+    >
       {item.status ? (
         <FaRegCircle onClick={() => handleDone(item.id, item.status)} />
       ) : (
         <FaRegCheckCircle onClick={() => handleDone(item.id, item.status)} />
       )}
       <p onClick={() => handleDone(item.id, item.status)}>{item.text}</p>
-      {!item.status && (
+      {!item.status ? (
         <FaTrashAlt onClick={() => handleDlt(item.id)} className="dltBtn" />
+      ) : (
+        <FaEdit
+          onClick={() =>
+            dispatchModal({ type: 'CLICKEDIT', id: item.id, text: item.text })
+          }
+          className="editBtn"
+        />
       )}
-    </div>
+    </motion.div>
   )
 }

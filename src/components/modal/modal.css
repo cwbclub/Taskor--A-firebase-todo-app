@@ -1,0 +1,66 @@
+.modalBg {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(3px);
+  z-index: 99;
+}
+
+.modal {
+  padding: 40px 25px 30px;
+  background-color: white;
+  box-shadow: 2px 2px 15px rgba(0, 0, 0, 0.308);
+  border-radius: 7px;
+  width: min(90%, 600px);
+}
+.modal h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal textarea {
+  padding: 7px 7px 7px 10px;
+  outline: none;
+  border: 2px solid rgb(48, 48, 48);
+  font-size: 1.2rem;
+  border-radius: 7px;
+}
+
+.modal textarea:focus {
+  border-color: blue;
+  color: blue;
+}
+
+.modal .btnDiv {
+  display: flex;
+  gap: 8px;
+}
+
+.modal button {
+  padding: 9px 10px;
+  font-size: 1.3rem;
+  background-color: white;
+  border: none;
+  color: white;
+  border-radius: 7px;
+}
+
+.modal .btnDiv button:nth-child(1) {
+  width: 40%;
+  background-color: rgb(186, 26, 26);
+}
+.modal .btnDiv button:nth-child(2) {
+  width: 60%;
+  background-color: rgb(17, 151, 80);
+}
