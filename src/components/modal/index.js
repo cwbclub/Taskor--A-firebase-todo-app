@@ -57,13 +57,13 @@ export default function Modal({ uid, inputText, textId, dispatchModal }) {
     setIsLoading(true)
     try {
       await updateTask(uid, textId, task)
-      toast.success(<b>Updated</b>)
       setIsLoading(false)
       dispatchModal({ type: 'OFF' })
+      toast.success(<b>Updated</b>)
     } catch (error) {
+      setIsLoading(false)
       toast.error(<b>{error.message}</b>)
       console.log(error.message)
-      setIsLoading(false)
     }
   }
 

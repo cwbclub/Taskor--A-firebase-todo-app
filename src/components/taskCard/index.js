@@ -10,6 +10,7 @@ import { chnageStatus, deleteTask } from '../../utils/firebase'
 import { motion } from 'framer-motion'
 import { useEffect, useMemo } from 'react'
 import throttle from 'lodash.throttle'
+import moment from 'moment'
 
 const mainVariant = {
   hidden: {
@@ -39,7 +40,7 @@ export default function TaskCard({ item, uid }) {
     }
   }
   const throttleDone = useMemo(
-    () => throttle((id, status) => handleDone(id, status), 1500),
+    () => throttle((id, status) => handleDone(id, status), 1400),
     []
   )
 
@@ -61,17 +62,28 @@ export default function TaskCard({ item, uid }) {
     return () => throttleDone.cancel()
   }, [])
 
+  console.log(item)
+
   return (
     <motion.div
       variants={mainVariant}
       className={`task ${!item.status ? 'done' : ''}`}
     >
       {item.status ? (
-        <FaRegCircle onClick={() => handleDone(item.id, item.status)} />
+        <FaRegCircle onClick={() => throttleDone(item.id, item.status)} />
       ) : (
         <FaRegCheckCircle onClick={() => handleDone(item.id, item.status)} />
       )}
-      <p onClick={() => throttleDone(item.id, item.status)}>{item.text}</p>
+      <div
+        onClick={() => throttleDone(item.id, item.status)}
+        className="taskContent"
+      >
+        <p className="text">{item.text}</p>
+        <p className="time">
+          Modified:{' '}
+          {moment.unix(item?.timestamp?.seconds).format('h:m a, D MMM YY')}
+        </p>
+      </div>
       {!item.status ? (
         <FaTrashAlt onClick={() => handleDlt(item.id)} className="dltBtn" />
       ) : (

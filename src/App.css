@@ -65,25 +65,24 @@ footer a {
   align-items: center;
   gap: 7px;
   background-color: #fff3ca;
-  box-shadow: 5px 6px 14px rgba(0, 0, 0, 0.25);
+  box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.16);
   border-radius: 7px;
   border: 0.5px solid rgb(161, 161, 161);
-  padding: 12px 49px 12px 8px;
+  padding: 9px 49px 7px 8px;
   position: relative;
 }
 
 .task svg {
   font-size: 1.2rem;
-  width: 10%;
+  flex-basis: 10%;
 }
 
-.task p {
+.task .text {
   font-size: 1.3rem;
-  line-height: 30px;
-  width: 90%;
+  line-height: 28px;
 }
 
-.task.done p {
+.task.done .text {
   text-decoration: line-through;
 }
 
@@ -219,6 +218,17 @@ form input::placeholder {
   color: #8ba6e7;
 }
 
+.taskContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-basis: 90%;
+}
+.taskContent p.time {
+  font-size: 0.9rem;
+  color: rgba(112, 112, 112, 0.768);
+}
+
 /* MEDIA QUERIES */
 @media screen and (min-width: 650px) {
   form {
@@ -228,16 +238,19 @@ form input::placeholder {
     padding-left: 15px;
   }
   .task {
-    padding: 10px 50px 10px 8px;
+    padding: 9px 50px 7px 8px;
   }
   .task svg {
     font-size: 1.1rem;
-    width: 5%;
+    flex-basis: 5%;
+  }
+
+  .taskContent {
+    flex-basis: 95%;
   }
   .task p {
     font-size: 1.2rem;
     line-height: 25px;
-    width: 95%;
   }
   .taskList {
     gap: 26px;

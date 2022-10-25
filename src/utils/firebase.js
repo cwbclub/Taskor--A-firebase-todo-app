@@ -40,5 +40,6 @@ export const updateTask = async (uid, id, text) => {
   const docRef = doc(db, `users/${uid}/tasklists/${id}`)
   await updateDoc(docRef, {
     text,
+    timestamp: serverTimestamp(),
   })
 }
