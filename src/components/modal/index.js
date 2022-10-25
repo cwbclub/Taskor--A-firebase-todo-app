@@ -10,7 +10,7 @@ const mainVariant = {
   },
   visible: {
     opacity: 1,
-    transition: { when: 'beforeChildren' },
+    transition: { delayChildren: 0.1 },
   },
   exit: {
     opacity: 0,
@@ -20,7 +20,7 @@ const mainVariant = {
 const modalVariant = {
   hidden: {
     opacity: 0,
-    y: -100,
+    y: 200,
     scale: 0,
   },
   visible: {
@@ -31,6 +31,7 @@ const modalVariant = {
   exit: {
     opacity: 0,
     scale: 0,
+    y: 200,
   },
 }
 

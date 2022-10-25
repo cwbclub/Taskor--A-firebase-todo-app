@@ -201,7 +201,7 @@ form input::placeholder {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  background-color: #bdd7f2;
+  background-color: #f8f8f9;
 }
 .loadingDiv {
   display: flex;

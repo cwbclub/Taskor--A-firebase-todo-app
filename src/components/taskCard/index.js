@@ -1,4 +1,3 @@
-import { deleteDoc } from 'firebase/firestore'
 import toast from 'react-hot-toast'
 import {
   FaEdit,
@@ -9,16 +8,16 @@ import {
 import { useModal } from '../../context/ModalContext'
 import { chnageStatus, deleteTask } from '../../utils/firebase'
 import { motion } from 'framer-motion'
+import { useEffect, useMemo } from 'react'
+import throttle from 'lodash.throttle'
 
 const mainVariant = {
   hidden: {
-    y: -40,
-    scale: 0.6,
+    x: 100,
     opacity: 0,
   },
   visible: {
-    y: 0,
-    scale: 1,
+    x: 0,
     opacity: 1,
   },
   exit: {
@@ -33,11 +32,16 @@ export default function TaskCard({ item, uid }) {
   const handleDone = async (id, status) => {
     try {
       await chnageStatus(uid, id, status)
+      console.count('run')
     } catch (error) {
       console.log(error.message)
       toast.error(<b>{error.message}</b>)
     }
   }
+  const throttleDone = useMemo(
+    () => throttle((id, status) => handleDone(id, status), 2000),
+    []
+  )
 
   const handleDlt = async (id) => {
     const isSure = window.confirm('Are you sure to delete this task?')
@@ -53,6 +57,10 @@ export default function TaskCard({ item, uid }) {
     }
   }
 
+  useEffect(() => {
+    return () => throttleDone.cancel()
+  }, [])
+
   return (
     <motion.div
       variants={mainVariant}
@@ -63,7 +71,7 @@ export default function TaskCard({ item, uid }) {
       ) : (
         <FaRegCheckCircle onClick={() => handleDone(item.id, item.status)} />
       )}
-      <p onClick={() => handleDone(item.id, item.status)}>{item.text}</p>
+      <p onClick={() => throttleDone(item.id, item.status)}>{item.text}</p>
       {!item.status ? (
         <FaTrashAlt onClick={() => handleDlt(item.id)} className="dltBtn" />
       ) : (

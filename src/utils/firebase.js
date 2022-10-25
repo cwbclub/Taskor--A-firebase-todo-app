@@ -24,6 +24,7 @@ export const addToDB = async (uid, task) => {
 }
 
 export const chnageStatus = async (uid, id, status) => {
+  console.count('Save to db')
   const docRef = doc(db, `users/${uid}/tasklists/${id}`)
   await updateDoc(docRef, {
     status: !status,

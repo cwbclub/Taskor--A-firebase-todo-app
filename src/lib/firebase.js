@@ -17,6 +17,6 @@ export const auth = getAuth(app)
 export const googleProvider = new GoogleAuthProvider()
 
 export const db = getFirestore(app)
-enableIndexedDbPersistence(db).catch((err) => {
-  console.error(err.message)
-})
+// enableIndexedDbPersistence(db).catch((err) => {
+//   console.error(err.message)
+// })
