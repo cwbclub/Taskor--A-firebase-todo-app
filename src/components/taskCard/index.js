@@ -39,7 +39,7 @@ export default function TaskCard({ item, uid }) {
     }
   }
   const throttleDone = useMemo(
-    () => throttle((id, status) => handleDone(id, status), 2000),
+    () => throttle((id, status) => handleDone(id, status), 1500),
     []
   )
 
