@@ -12,7 +12,7 @@ import TaskList from './components/taskList'
 import TaskReducer from './reducers/taskReducer'
 import { useModal } from './context/ModalContext'
 import Modal from './components/modal'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 
 const formVariant = {
   hidden: {
@@ -134,14 +134,16 @@ export default function App() {
           CanWeBe!
         </a>
       </footer>
-      {isModal && (
-        <Modal
-          dispatchModal={dispatchModal}
-          inputText={inputText}
-          textId={textId}
-          uid={user?.uid}
-        />
-      )}
+      <AnimatePresence>
+        {isModal && (
+          <Modal
+            dispatchModal={dispatchModal}
+            inputText={inputText}
+            textId={textId}
+            uid={user?.uid}
+          />
+        )}
+      </AnimatePresence>
     </>
   )
 }

@@ -47,18 +47,21 @@
   gap: 8px;
 }
 
-.modal button {
+.modal button,
+.modal span {
   padding: 9px 10px;
   font-size: 1.3rem;
   background-color: white;
   border: none;
   color: white;
   border-radius: 7px;
+  text-align: center;
 }
 
-.modal .btnDiv button:nth-child(1) {
+.modal .btnDiv span {
   width: 40%;
   background-color: rgb(186, 26, 26);
+  cursor: pointer;
 }
 .modal .btnDiv button:nth-child(2) {
   width: 60%;

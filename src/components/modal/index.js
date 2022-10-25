@@ -2,6 +2,37 @@ import { useState } from 'react'
 import toast from 'react-hot-toast'
 import { updateTask } from '../../utils/firebase'
 import './modal.css'
+import { motion } from 'framer-motion'
+
+const mainVariant = {
+  hidden: {
+    opacity: 0,
+  },
+  visible: {
+    opacity: 1,
+    transition: { when: 'beforeChildren' },
+  },
+  exit: {
+    opacity: 0,
+  },
+}
+
+const modalVariant = {
+  hidden: {
+    opacity: 0,
+    y: -100,
+    scale: 0,
+  },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+  },
+  exit: {
+    opacity: 0,
+    scale: 0,
+  },
+}
 
 export default function Modal({ uid, inputText, textId, dispatchModal }) {
   const [task, setTask] = useState(inputText)
@@ -20,6 +51,11 @@ export default function Modal({ uid, inputText, textId, dispatchModal }) {
       dispatchModal({ type: 'OFF' })
       return
     }
+    if (!task.length) {
+      toast.error(<b>Type something!</b>)
+      return
+    }
+
     setIsLoading(true)
     try {
       await updateTask(uid, textId, task)
@@ -34,9 +70,15 @@ export default function Modal({ uid, inputText, textId, dispatchModal }) {
   }
 
   return (
-    <div className="modalBg" onClick={handleClick}>
-      {console.log('Value', inputText)}
-      <div className="modal">
+    <motion.div
+      variants={mainVariant}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="modalBg"
+      onClick={handleClick}
+    >
+      <motion.div variants={modalVariant} className="modal">
         <h3>Update Your Task</h3>
         <form onSubmit={handleSubmit}>
           <textarea
@@ -47,15 +89,13 @@ export default function Modal({ uid, inputText, textId, dispatchModal }) {
             placeholder="Eg: Buy milk"
           />
           <div className="btnDiv">
-            <button onClick={() => dispatchModal({ type: 'OFF' })}>
-              Cancel
-            </button>
-            <button disabled={isLoading} type="submit">
+            <span onClick={() => dispatchModal({ type: 'OFF' })}>Cancel</span>
+            <button type="submit" disabled={isLoading}>
               {isLoading ? 'Updating' : 'Update'}
             </button>
           </div>
         </form>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   )
 }
