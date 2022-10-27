@@ -80,6 +80,7 @@ footer a {
 .task .text {
   font-size: 1.3rem;
   line-height: 28px;
+  word-break: break-word;
 }
 
 .task.done .text {
