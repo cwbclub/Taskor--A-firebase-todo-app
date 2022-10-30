@@ -8,6 +8,11 @@
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## About Taskor
+
+Now you can use the taskor app it's an amazing app made by @anish_tharu. In this you can add an remider for your next work and that will remind you. 
+After work done you can delete that reminder.
+
 ## Available Scripts
 
 In the project directory, you can run:
