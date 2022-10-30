@@ -11,6 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 ## Available Scripts
 
 In the project directory, you can run:
+>- CWBClub is a coding organisation where you can learn code and do internship
 
 ### `npm start`
 
