@@ -62,8 +62,6 @@ export default function TaskCard({ item, uid }) {
     return () => throttleDone.cancel()
   }, [])
 
-  console.log(item)
-
   return (
     <motion.div
       variants={mainVariant}
@@ -81,7 +79,7 @@ export default function TaskCard({ item, uid }) {
         <p className="text">{item.text}</p>
         <p className="time">
           Modified:{' '}
-          {moment.unix(item?.timestamp?.seconds).format('h:m a, D MMM YY')}
+          {moment.unix(item?.timestamp?.seconds).format('h:mm a, D MMM YY')}
         </p>
       </div>
       {!item.status ? (
