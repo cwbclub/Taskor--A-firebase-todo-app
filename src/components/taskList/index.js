@@ -1,6 +1,7 @@
 import { useAuth } from '../../context/AuthContext'
 import TaskCard from '../taskCard'
 import { motion } from 'framer-motion'
+
 const container = {
   hidden: { opacity: 0 },
   visible: {
@@ -10,7 +11,7 @@ const container = {
     },
   },
   exit: {
-    x: '80vw',
+    // x: '80vw',
     opacity: 0,
   },
 }
@@ -40,8 +41,8 @@ export default function TaskList({ data, current }) {
             initial="hidden"
             animate="visible"
             exit="exit"
-            className="taskList"
             layout
+            className="taskList"
           >
             {data.map((item) => (
               <TaskCard item={item} uid={user?.uid} key={item.id} />
