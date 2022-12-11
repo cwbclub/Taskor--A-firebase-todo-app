@@ -16,7 +16,7 @@ After work done you can delete that reminder.
 ## Available Scripts
 
 In the project directory, you can run:
->- CWBClub is a coding organisation where you can learn code and do internship
+>- CWBClub is a coding organisation where you can learn code and do internship 
 
 ### `npm start`
 
