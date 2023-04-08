@@ -129,7 +129,7 @@ export default function App() {
         <a
           target="_blank"
           rel="noopener noreferrer"
-          href="https://canwebe.tech"
+          href="https://www.canwebe.in"
         >
           CanWeBe!
         </a>
